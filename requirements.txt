@@ -2,3 +2,4 @@
 #   pip install -r requirements.txt
 requests==2.32.*        # making HTTP calls to the APIs
 python-dotenv==1.*      # reading settings from the .env file
+psycopg[binary]==3.*	# talking to Postgres
