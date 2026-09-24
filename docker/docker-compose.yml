@@ -1,0 +1,36 @@
+# docker-compose.yml — describes the containers for this project.
+# Run from this folder:  docker compose up -d
+name: data-eng-project
+
+services:
+  postgres:
+    # Official Postgres image, pinned to a major version so upgrades are a deliberate choice.
+    image: postgres:17
+    container_name: stocks-postgres
+    restart: unless-stopped
+
+    # Reads POSTGRES_USER / POSTGRES_PASSWORD / POSTGRES_DB from the .env file in the repo root.
+    # The Postgres image uses these on first start to create the user and database.
+    env_file:
+      - ../.env
+
+    # "your Mac's port : the container's port" — lets DBeaver/Python on your Mac reach
+    # the database at localhost:5432. If 5432 is already taken, change the left side (e.g. "5433:5432").
+    ports:
+      - "5432:5432"
+
+    volumes:
+      # Named volume: the database files live here, so data survives `docker compose down`.
+      - pgdata:/var/lib/postgresql/data
+      # Any .sql file in ./init runs once, when the database is first created.
+      - ./init:/docker-entrypoint-initdb.d:ro
+
+    # Lets Docker report whether Postgres is actually ready to accept connections.
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  pgdata:
