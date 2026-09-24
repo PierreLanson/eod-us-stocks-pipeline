@@ -1,6 +1,6 @@
 # docker-compose.yml — describes the containers for this project.
 # Run from this folder:  docker compose up -d
-name: data-eng-project
+name: eod-us-stocks-pipeline
 
 services:
   postgres:

@@ -1,4 +1,4 @@
-# data-eng-project
+# eod-us-stocks-pipeline
 
 An ELT pipeline for end-of-day US stock market data. Learning project covering Git, Docker, Postgres and dbt.
 
