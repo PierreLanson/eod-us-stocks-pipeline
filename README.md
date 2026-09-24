@@ -32,6 +32,25 @@ An ELT pipeline for end-of-day US stock market data. Learning project covering G
 3. Connect with DBeaver: host `localhost`, port `5432`, database/user/password from your `.env`.
    You should see an empty `raw` schema.
 
+## Python setup (once)
+
+A *virtual environment* (`.venv/`) is a private copy of Python for this project,
+so its packages don't clash with anything else on your Mac. From the repo root:
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate        # do this in every new Terminal window; prompt shows (.venv)
+pip install -r requirements.txt
+```
+
+## Running the pipeline
+
+```bash
+source .venv/bin/activate
+python ingest/sec_tickers.py     # company tickers -> data/raw/sec_company_tickers/
+python ingest/daily_prices.py    # all US stock prices, last trading day -> data/raw/massive_daily_summary/
+```
+
 ## Everyday Docker commands (run inside `docker/`)
 
 | Command | What it does |

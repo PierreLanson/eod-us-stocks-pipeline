@@ -1,0 +1,4 @@
+# Python packages for this project. Install into your virtual environment with:
+#   pip install -r requirements.txt
+requests==2.32.*        # making HTTP calls to the APIs
+python-dotenv==1.*      # reading settings from the .env file
