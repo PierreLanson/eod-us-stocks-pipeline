@@ -22,10 +22,6 @@ headers = {"User-Agent": user_agent}
 response = requests.get(URL, headers=headers, timeout=30)
 response.raise_for_status()
 data = response.json()
-
-
-
-
 print(len(data))
 
 out_dir = Path("data/raw/sec_company_tickers")
