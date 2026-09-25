@@ -45,12 +45,20 @@ pip install -r requirements.txt
 
 ## Running the pipeline
 
+Run everything from the repo root with the virtual environment active:
+
 ```bash
 source .venv/bin/activate
+
+# 1. Ingest: call the APIs, save raw JSON
 python ingest/sec_tickers.py     # company tickers -> data/raw/sec_company_tickers/
 python ingest/daily_prices.py    # all US stock prices, last trading day -> data/raw/massive_daily_summary/
-```
 
+# 2. Load: create the raw tables (once), then load the JSON into Postgres
+#    Run load/create_raw_tables.sql in DBeaver first
+python load/load_sec.py          # -> raw.sec_company_tickers
+python load/load_raw.py          # -> raw.massive_daily_summary
+```
 ## Everyday Docker commands (run inside `docker/`)
 
 | Command | What it does |
@@ -60,3 +68,16 @@ python ingest/daily_prices.py    # all US stock prices, last trading day -> data
 | `docker compose logs -f` | Watch the database logs (Ctrl+C to stop watching) |
 | `docker compose down` | Stop Postgres — **data is kept** |
 | `docker compose down -v` | Stop and **delete all data** (fresh start) |
+
+
+## Status
+
+Work in progress.
+
+- [x] Postgres running in Docker
+- [x] Ingest: SEC tickers and Massive daily prices saved as raw JSON
+- [x] Load: raw tables and load scripts for both sources
+- [ ] Load scripts take the date as an argument (currently hard-coded)
+- [ ] dbt models: clean prices, ticker → CIK history, join prices to companies
+- [ ] Replicate the SNP 500, Russell 3000
+- [ ] Make hybrid index fund of equal and market cap weighted index fund

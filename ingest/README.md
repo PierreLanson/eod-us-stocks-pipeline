@@ -17,6 +17,5 @@ Planned sources:
 |--------|--------------|
 | `sec_tickers.py` | Today's SEC ticker → CIK list, saved to `data/raw/sec_company_tickers/<date>.json` |
 | `daily_prices.py` | Massive Daily Market Summary for one date (or a range with `--start/--end`), saved to `data/raw/massive_daily_summary/<date>.json` |
-| `common.py` | Shared helpers: reads `.env`, builds `data/raw/...` paths |
 
 Run `python ingest/daily_prices.py --help` for all options.
